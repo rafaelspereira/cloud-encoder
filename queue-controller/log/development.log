@@ -1,0 +1,217 @@
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1mSHOW TABLES[0m
+  [4;35;1mSQL (25.7ms)[0m   [0mCREATE TABLE `schema_migrations` (`version` varchar(255) NOT NULL) ENGINE=InnoDB[0m
+  [4;36;1mSQL (4.3ms)[0m   [0;1mCREATE UNIQUE INDEX `unique_schema_migrations` ON `schema_migrations` (`version`)[0m
+  [4;35;1mSQL (0.2ms)[0m   [0mSHOW TABLES[0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1mSELECT version FROM schema_migrations[0m
+Migrating to CreateJobs (20090916215222)
+  [4;35;1mSQL (2.3ms)[0m   [0mCREATE TABLE `jobs` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB[0m
+  [4;36;1mSQL (0.4ms)[0m   [0;1mINSERT INTO schema_migrations (version) VALUES ('20090916215222')[0m
+Migrating to CreateTasks (20090916215338)
+  [4;35;1mSQL (16.8ms)[0m   [0mCREATE TABLE `tasks` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB[0m
+  [4;36;1mSQL (0.6ms)[0m   [0;1mINSERT INTO schema_migrations (version) VALUES ('20090916215338')[0m
+Migrating to AdicionandoTasksNoJob (20090916215450)
+  [4;35;1mSQL (16.3ms)[0m   [0mALTER TABLE `tasks` ADD `job_id` int(11)[0m
+  [4;36;1mSQL (0.6ms)[0m   [0;1mINSERT INTO schema_migrations (version) VALUES ('20090916215450')[0m
+  [4;35;1mSQL (0.4ms)[0m   [0mSHOW TABLES[0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1mSELECT version FROM schema_migrations[0m
+  [4;35;1mSQL (0.2ms)[0m   [0mSHOW TABLES[0m
+  [4;36;1mSQL (0.9ms)[0m   [0;1mSHOW FIELDS FROM `jobs`[0m
+  [4;35;1mSQL (1.0ms)[0m   [0mdescribe `jobs`[0m
+  [4;36;1mSQL (0.3ms)[0m   [0;1mSHOW KEYS FROM `jobs`[0m
+  [4;35;1mSQL (0.8ms)[0m   [0mSHOW FIELDS FROM `tasks`[0m
+  [4;36;1mSQL (0.8ms)[0m   [0;1mdescribe `tasks`[0m
+  [4;35;1mSQL (0.3ms)[0m   [0mSHOW KEYS FROM `tasks`[0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mJob Columns (0.9ms)[0m   [0;1mSHOW FIELDS FROM `jobs`[0m
+  [4;35;1mTask Columns (0.9ms)[0m   [0mSHOW FIELDS FROM `tasks`[0m
+  [4;36;1mJob Load (0.3ms)[0m   [0;1mSELECT * FROM `jobs` [0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1mSHOW TABLES[0m
+  [4;35;1mSQL (0.2ms)[0m   [0mSELECT version FROM schema_migrations[0m
+Migrating to CreateJobs (20090916215222)
+Migrating to CreateTasks (20090916215338)
+Migrating to AdicionandoTasksNoJob (20090916215450)
+  [4;36;1mSQL (0.3ms)[0m   [0;1mSHOW TABLES[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSELECT version FROM schema_migrations[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSHOW TABLES[0m
+  [4;35;1mSQL (0.5ms)[0m   [0mSHOW FIELDS FROM `jobs`[0m
+  [4;36;1mSQL (0.4ms)[0m   [0;1mdescribe `jobs`[0m
+  [4;35;1mSQL (0.2ms)[0m   [0mSHOW KEYS FROM `jobs`[0m
+  [4;36;1mSQL (0.4ms)[0m   [0;1mSHOW FIELDS FROM `tasks`[0m
+  [4;35;1mSQL (0.4ms)[0m   [0mdescribe `tasks`[0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1mSHOW KEYS FROM `tasks`[0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mJob Columns (0.9ms)[0m   [0;1mSHOW FIELDS FROM `jobs`[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mJob Create (0.3ms)[0m   [0;1mINSERT INTO `jobs` (`created_at`, `updated_at`) VALUES('2009-09-16 22:02:04', '2009-09-16 22:02:04')[0m
+  [4;35;1mSQL (5.3ms)[0m   [0mCOMMIT[0m
+  [4;36;1mTask Columns (1.0ms)[0m   [0;1mSHOW FIELDS FROM `tasks`[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mTask Create (0.3ms)[0m   [0;1mINSERT INTO `tasks` (`created_at`, `updated_at`, `job_id`) VALUES('2009-09-16 22:02:12', '2009-09-16 22:02:12', NULL)[0m
+  [4;35;1mSQL (1.4ms)[0m   [0mCOMMIT[0m
+  [4;36;1mTask Load (0.4ms)[0m   [0;1mSELECT * FROM `tasks` WHERE (`tasks`.job_id = 1) [0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mTask Update (0.5ms)[0m   [0;1mUPDATE `tasks` SET `updated_at` = '2009-09-16 22:02:22', `job_id` = 1 WHERE `id` = 1[0m
+  [4;35;1mSQL (5.5ms)[0m   [0mCOMMIT[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mCOMMIT[0m
+  [4;36;1mTask Load (0.3ms)[0m   [0;1mSELECT * FROM `tasks` [0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1mSHOW TABLES[0m
+  [4;35;1mSQL (0.2ms)[0m   [0mSELECT version FROM schema_migrations[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mSQL (7.7ms)[0m   [0;1mDROP DATABASE IF EXISTS `queue-controller-test`[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mCREATE DATABASE `queue-controller-test` DEFAULT CHARACTER SET `utf8`[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1mSHOW TABLES[0m
+  [4;35;1mSQL (3.7ms)[0m   [0mCREATE TABLE `jobs` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB[0m
+  [4;36;1mSQL (0.3ms)[0m   [0;1mSHOW TABLES[0m
+  [4;35;1mSQL (3.4ms)[0m   [0mCREATE TABLE `tasks` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `created_at` datetime, `updated_at` datetime, `job_id` int(11)) ENGINE=InnoDB[0m
+  [4;36;1mSQL (0.3ms)[0m   [0;1mSHOW TABLES[0m
+  [4;35;1mSQL (3.5ms)[0m   [0mCREATE TABLE `schema_migrations` (`version` varchar(255) NOT NULL) ENGINE=InnoDB[0m
+  [4;36;1mSQL (5.4ms)[0m   [0;1mCREATE UNIQUE INDEX `unique_schema_migrations` ON `schema_migrations` (`version`)[0m
+  [4;35;1mSQL (0.3ms)[0m   [0mSHOW TABLES[0m
+  [4;36;1mSQL (0.3ms)[0m   [0;1mSELECT version FROM `schema_migrations`[0m
+  [4;35;1mSQL (0.4ms)[0m   [0mINSERT INTO `schema_migrations` (version) VALUES ('20090916215450')[0m
+  [4;36;1mSQL (0.4ms)[0m   [0;1mINSERT INTO `schema_migrations` (version) VALUES ('20090916215222')[0m
+  [4;35;1mSQL (0.4ms)[0m   [0mINSERT INTO `schema_migrations` (version) VALUES ('20090916215338')[0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing JobsController#index (for 127.0.0.1 at 2009-09-16 19:34:45) [POST]
+
+ActionController::UnknownAction (No action responded to index. Actions: create):
+  
+
+Rendering rescues/layout (not_found)
+  [4;36;1mSQL (0.2ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing JobsController#create (for 127.0.0.1 at 2009-09-16 19:36:32) [POST]
+Completed in 3ms (View: 0, DB: 0) | 200 OK [http://localhost/jobs]
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1mSHOW TABLES[0m
+  [4;35;1mSQL (0.2ms)[0m   [0mSELECT version FROM schema_migrations[0m
+Migrating to CreateJobs (20090916215222)
+Migrating to CreateTasks (20090916215338)
+Migrating to AdicionandoTasksNoJob (20090916215450)
+Migrating to AdicionandoVideoEDuracaoAoJob (20090916230358)
+  [4;36;1mSQL (6.3ms)[0m   [0;1mALTER TABLE `jobs` ADD `input_video` varchar(255)[0m
+  [4;35;1mSQL (8.9ms)[0m   [0mALTER TABLE `jobs` ADD `duration` int(11)[0m
+  [4;36;1mSQL (0.5ms)[0m   [0;1mINSERT INTO schema_migrations (version) VALUES ('20090916230358')[0m
+  [4;35;1mSQL (0.3ms)[0m   [0mSHOW TABLES[0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1mSELECT version FROM schema_migrations[0m
+  [4;35;1mSQL (0.2ms)[0m   [0mSHOW TABLES[0m
+  [4;36;1mSQL (0.7ms)[0m   [0;1mSHOW FIELDS FROM `jobs`[0m
+  [4;35;1mSQL (0.6ms)[0m   [0mdescribe `jobs`[0m
+  [4;36;1mSQL (0.3ms)[0m   [0;1mSHOW KEYS FROM `jobs`[0m
+  [4;35;1mSQL (0.6ms)[0m   [0mSHOW FIELDS FROM `tasks`[0m
+  [4;36;1mSQL (0.5ms)[0m   [0;1mdescribe `tasks`[0m
+  [4;35;1mSQL (0.2ms)[0m   [0mSHOW KEYS FROM `tasks`[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing JobsController#create (for 127.0.0.1 at 2009-09-16 20:06:29) [POST]
+  Parameters: {"input_video"=>"/home/rafael/Videos/the_dark_knight-tlr3_h720p.mov"}
+
+NoMethodError (undefined method `criar_job' for FabricaDeJobs:Class):
+  app/controllers/jobs_controller.rb:4:in `create'
+
+Rendered rescues/_trace (108.2ms)
+Rendered rescues/_request_and_response (1.5ms)
+Rendering rescues/layout (internal_server_error)
+  [4;36;1mSQL (0.2ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing JobsController#create (for 127.0.0.1 at 2009-09-16 20:07:16) [POST]
+  Parameters: {"input_video"=>"/home/rafael/Videos/the_dark_knight-tlr3_h720p.mov"}
+
+NoMethodError (undefined method `[]' for :params:Symbol):
+  app/models/fabrica_de_jobs.rb:3:in `criar_job'
+  app/controllers/jobs_controller.rb:4:in `create'
+
+Rendered rescues/_trace (91.6ms)
+Rendered rescues/_request_and_response (1.5ms)
+Rendering rescues/layout (internal_server_error)
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing JobsController#create (for 127.0.0.1 at 2009-09-16 20:08:44) [POST]
+  Parameters: {"input_video"=>"/home/rafael/Videos/the_dark_knight-tlr3_h720p.mov"}
+
+NoMethodError (undefined method `get_video_duration' for FabricaDeJobs:Class):
+  app/models/fabrica_de_jobs.rb:3:in `criar_job'
+  app/controllers/jobs_controller.rb:4:in `create'
+
+Rendered rescues/_trace (94.8ms)
+Rendered rescues/_request_and_response (2.2ms)
+Rendering rescues/layout (internal_server_error)
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing JobsController#create (for 127.0.0.1 at 2009-09-16 20:09:04) [POST]
+  Parameters: {"input_video"=>"/home/rafael/Videos/the_dark_knight-tlr3_h720p.mov"}
+
+NoMethodError (undefined method `get_video_duration' for FabricaDeJobs:Class):
+  app/models/fabrica_de_jobs.rb:3:in `criar_job'
+  app/controllers/jobs_controller.rb:4:in `create'
+
+Rendered rescues/_trace (101.7ms)
+Rendered rescues/_request_and_response (1.5ms)
+Rendering rescues/layout (internal_server_error)
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing JobsController#create (for 127.0.0.1 at 2009-09-16 20:10:08) [POST]
+  Parameters: {"input_video"=>"/home/rafael/Videos/the_dark_knight-tlr3_h720p.mov"}
+
+NoMethodError (undefined method `get_video_duration' for FabricaDeJobs:Class):
+  app/models/fabrica_de_jobs.rb:3:in `criar_job'
+  app/controllers/jobs_controller.rb:4:in `create'
+
+Rendered rescues/_trace (88.9ms)
+Rendered rescues/_request_and_response (1.5ms)
+Rendering rescues/layout (internal_server_error)
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing JobsController#create (for 127.0.0.1 at 2009-09-16 20:12:16) [POST]
+  Parameters: {"input_video"=>"/home/rafael/Videos/the_dark_knight-tlr3_h720p.mov"}
+  [4;36;1mJob Columns (1.1ms)[0m   [0;1mSHOW FIELDS FROM `jobs`[0m
+  [4;35;1mSQL (0.3ms)[0m   [0mBEGIN[0m
+  [4;36;1mJob Create (0.3ms)[0m   [0;1mINSERT INTO `jobs` (`duration`, `created_at`, `updated_at`, `input_video`) VALUES(149200, '2009-09-16 23:12:16', '2009-09-16 23:12:16', '/home/rafael/Videos/the_dark_knight-tlr3_h720p.mov')[0m
+  [4;35;1mSQL (4.8ms)[0m   [0mCOMMIT[0m
+
+ActionView::MissingTemplate (Missing template jobs/create.erb in view path app/views):
+  
+
+Rendering rescues/layout (internal_server_error)
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing JobsController#create (for 127.0.0.1 at 2009-09-16 20:13:03) [POST]
+  Parameters: {"input_video"=>"/home/rafael/Videos/the_dark_knight-tlr3_h720p.mov"}
+  [4;36;1mJob Columns (0.7ms)[0m   [0;1mSHOW FIELDS FROM `jobs`[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mJob Create (0.4ms)[0m   [0;1mINSERT INTO `jobs` (`duration`, `created_at`, `updated_at`, `input_video`) VALUES(149200, '2009-09-16 23:13:03', '2009-09-16 23:13:03', '/home/rafael/Videos/the_dark_knight-tlr3_h720p.mov')[0m
+  [4;35;1mSQL (2.7ms)[0m   [0mCOMMIT[0m
+Rendering jobs/create
+Completed in 132ms (View: 10, DB: 4) | 200 OK [http://localhost/jobs?input_video=/home/rafael/Videos/the_dark_knight-tlr3_h720p.mov]
