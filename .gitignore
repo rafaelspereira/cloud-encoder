@@ -1,1 +1,2 @@
-queue-controller/nbproject/
+queue-controller/nbproject/*
+queue-controller/coverage/*

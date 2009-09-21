@@ -11,6 +11,7 @@ describe JobFactory do
   end
 
   it "deveria criar um job" do
-    Job.should_receive(:create!).with(:input_video => "video.flv", :duration => 1234)
+    Job.should_receive(:create!).with(:input_video => "spec/fixtures/video/video.flv", :duration => 2820)
+    JobFactory.create_job({:input_video => 'spec/fixtures/video/video.flv'})
   end
 end
