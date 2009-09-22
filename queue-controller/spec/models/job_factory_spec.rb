@@ -11,8 +11,16 @@ describe JobFactory do
     @cmd_mix = "mencoder /tmp/video.mp4 -audio-demuxer lavf -audiofile /tmp/audio.mp3 -ovc copy -oac copy -of lavf -lavfopts format=mp4,i_certify_that_my_video_stream_does_not_use_b_frames -o spec/fixtures/video/video_lowres.mp4"
   end
 
-  it "deveria obter a duracao de um video" do
-    Job.reflect_on_association(:tasks).should_not be_nil
+  it "deveria verificar se o arquivo original existe" do
+    File.should_receive(:exists?).with("spec/fixtures/video/video.flv").and_return(true)
+    JobFactory.create_job({:input_video => 'spec/fixtures/video/video.flv'})
+  end
+
+  it "deveria lancar excecao se o arquivo original nao existe" do
+    File.should_receive(:exists?).with("spec/fixtures/video/video.flv").and_return(false)
+    lambda {
+        JobFactory.create_job({:input_video => 'spec/fixtures/video/video.flv'})
+      }.should raise_error(RuntimeError,"File not found")
   end
 
   it "deveria criar um job" do

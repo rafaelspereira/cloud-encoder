@@ -156,7 +156,7 @@
       C0 code coverage information
     </h3>
     <p>
-      Generated on Mon Sep 21 21:27:46 -0300 2009 with 
+      Generated on Mon Sep 21 21:39:20 -0300 2009 with 
       <a href='http://eigenclass.org/hiki/rcov'>
         rcov 0.8.1.2
       </a>
@@ -174,7 +174,7 @@
     <td class='heading'> Total coverage </td> <td class='heading'> Code coverage
     </td> </tr> </thead> <tbody> <tr class='light'> <td> <a
     href='app-models-job_factory_rb.html'> app/models/job_factory.rb </a> </td>
-    <td class='lines_total'> <tt> 63 </tt> </td> <td class='lines_code'> <tt> 44
+    <td class='lines_total'> <tt> 69 </tt> </td> <td class='lines_code'> <tt> 47
     </tt> </td> <td> <table cellspacing='0' align='right' cellpadding='0'> <tr>
     <td> <tt class='coverage_total'> 100.0% </tt> &nbsp; </td> <td> <table
     class='percent_graph' cellspacing='0' width='100' cellpadding='0'> <tr> <td
@@ -188,85 +188,91 @@
     require 'app_config' </span><span class="inferred1"><a name="line2"></a> 2
     </span><span class="marked0"><a name="line3"></a> 3 class JobFactory
     </span><span class="marked1"><a name="line4"></a> 4 def
-    self.create_job(params) </span><span class="marked0"><a name="line5"></a> 5
-    metadata = get_video_metadata(params[:input_video]) </span><span
-    class="inferred1"><a name="line6"></a> 6 </span><span class="marked0"><a
-    name="line7"></a> 7 last_chunk = 0 </span><span class="marked1"><a
-    name="line8"></a> 8 index = 0 </span><span class="marked0"><a
-    name="line9"></a> 9 duration = metadata[:duration] </span><span
-    class="marked1"><a name="line10"></a>10 reaspect_width =
-    metadata[:height]/3*4 </span><span class="inferred0"><a name="line11"></a>11
-    </span><span class="marked1"><a name="line12"></a>12 if params[:input_video]
-    =~ /(.*)\.\w{3}/ </span><span class="marked0"><a name="line13"></a>13
-    output_path = $1 + &quot;_lowres.mp4&quot; </span><span class="inferred1"><a
-    name="line14"></a>14 end </span><span class="inferred0"><a
-    name="line15"></a>15 </span><span class="marked1"><a name="line16"></a>16
+    self.create_job(params) </span><span class="inferred0"><a name="line5"></a>
+    5 </span><span class="marked1"><a name="line6"></a> 6
+    if(!File.exists?(params[:input_video])) </span><span class="marked0"><a
+    name="line7"></a> 7 raise &quot;File not found&quot; </span><span
+    class="inferred1"><a name="line8"></a> 8 end </span><span
+    class="inferred0"><a name="line9"></a> 9 </span><span class="marked1"><a
+    name="line10"></a>10 metadata = get_video_metadata(params[:input_video])
+    </span><span class="inferred0"><a name="line11"></a>11 </span><span
+    class="marked1"><a name="line12"></a>12 last_chunk = 0 </span><span
+    class="marked0"><a name="line13"></a>13 index = 0 </span><span
+    class="marked1"><a name="line14"></a>14 duration = metadata[:duration]
+    </span><span class="marked0"><a name="line15"></a>15 reaspect_width =
+    metadata[:height]/3*4 </span><span class="inferred1"><a name="line16"></a>16
+    </span><span class="marked0"><a name="line17"></a>17 if params[:input_video]
+    =~ /(.*)\.\w{3}/ </span><span class="marked1"><a name="line18"></a>18
+    output_path = $1 + &quot;_lowres.mp4&quot; </span><span class="inferred0"><a
+    name="line19"></a>19 end </span><span class="inferred1"><a
+    name="line20"></a>20 </span><span class="marked0"><a name="line21"></a>21
     Job.create!(:input_video =&gt; params[:input_video], :duration =&gt;
-    duration) </span><span class="inferred0"><a name="line17"></a>17
-    </span><span class="marked1"><a name="line18"></a>18 duration = duration /
-    1000 </span><span class="inferred0"><a name="line19"></a>19 </span><span
-    class="inferred1"><a name="line20"></a>20 #VIDEO CHUNK PROCESSING
-    </span><span class="marked0"><a name="line21"></a>21 while last_chunk &lt;
-    duration do </span><span class="marked1"><a name="line22"></a>22 cmd =
+    duration) </span><span class="inferred1"><a name="line22"></a>22
+    </span><span class="marked0"><a name="line23"></a>23 duration = duration /
+    1000 </span><span class="inferred1"><a name="line24"></a>24 </span><span
+    class="inferred0"><a name="line25"></a>25 #VIDEO CHUNK PROCESSING
+    </span><span class="marked1"><a name="line26"></a>26 while last_chunk &lt;
+    duration do </span><span class="marked0"><a name="line27"></a>27 cmd =
     &quot;mencoder -vf
     crop=#{reaspect_width}:#{metadata[:height]},scale=#{AppConfig.mencoder.video
     output_width}:#{AppConfig.mencoder.video.output_height},harddup
     #{params[:input_video]} -ss #{last_chunk} -endpos #{AppConfig.chunk_size}
     #{AppConfig.mencoder.video.opts} -nosound -o
     #{AppConfig.processing_path}/#{&quot;%04d&quot; % index}.mp4&quot;
-    </span><span class="inferred0"><a name="line23"></a>23 </span><span
-    class="marked1"><a name="line24"></a>24 Task.create!(:command =&gt; cmd)
-    </span><span class="inferred0"><a name="line25"></a>25 </span><span
-    class="marked1"><a name="line26"></a>26 index = index + 1 </span><span
-    class="marked0"><a name="line27"></a>27 last_chunk = last_chunk +
-    AppConfig.split_time </span><span class="inferred1"><a name="line28"></a>28
-    end </span><span class="inferred0"><a name="line29"></a>29 </span><span
-    class="inferred1"><a name="line30"></a>30 #AUDIO PROCESSING </span><span
-    class="marked0"><a name="line31"></a>31 cmd = &quot;mencoder
+    </span><span class="inferred1"><a name="line28"></a>28 </span><span
+    class="marked0"><a name="line29"></a>29 Task.create!(:command =&gt; cmd)
+    </span><span class="inferred1"><a name="line30"></a>30 </span><span
+    class="marked0"><a name="line31"></a>31 index = index + 1 </span><span
+    class="marked1"><a name="line32"></a>32 last_chunk = last_chunk +
+    AppConfig.split_time </span><span class="inferred0"><a name="line33"></a>33
+    end </span><span class="inferred1"><a name="line34"></a>34 </span><span
+    class="inferred0"><a name="line35"></a>35 #AUDIO PROCESSING </span><span
+    class="marked1"><a name="line36"></a>36 cmd = &quot;mencoder
     #{params[:input_video]} #{AppConfig.mencoder.audio.opts} -o
-    #{AppConfig.processing_path}/audio.mp3&quot; </span><span class="marked1"><a
-    name="line32"></a>32 Task.create!(:command =&gt; cmd) </span><span
-    class="inferred0"><a name="line33"></a>33 </span><span class="inferred1"><a
-    name="line34"></a>34 #CHUNK MERGE </span><span class="marked0"><a
-    name="line35"></a>35 cmd = &quot;mencoder `seq -f %04g.mp4 0 #{index - 1}`
+    #{AppConfig.processing_path}/audio.mp3&quot; </span><span class="marked0"><a
+    name="line37"></a>37 Task.create!(:command =&gt; cmd) </span><span
+    class="inferred1"><a name="line38"></a>38 </span><span class="inferred0"><a
+    name="line39"></a>39 #CHUNK MERGE </span><span class="marked1"><a
+    name="line40"></a>40 cmd = &quot;mencoder `seq -f %04g.mp4 0 #{index - 1}`
     -ovc copy -nosound -of lavf -lavfopts
     format=mp4,i_certify_that_my_video_stream_does_not_use_b_frames -o
-    #{AppConfig.processing_path}/video.mp4&quot; </span><span class="marked1"><a
-    name="line36"></a>36 Task.create!(:command =&gt; cmd) </span><span
-    class="inferred0"><a name="line37"></a>37 </span><span class="inferred1"><a
-    name="line38"></a>38 #A/V MIXING </span><span class="marked0"><a
-    name="line39"></a>39 cmd = &quot;mencoder
+    #{AppConfig.processing_path}/video.mp4&quot; </span><span class="marked0"><a
+    name="line41"></a>41 Task.create!(:command =&gt; cmd) </span><span
+    class="inferred1"><a name="line42"></a>42 </span><span class="inferred0"><a
+    name="line43"></a>43 #A/V MIXING </span><span class="marked1"><a
+    name="line44"></a>44 cmd = &quot;mencoder
     #{AppConfig.processing_path}/video.mp4 -audio-demuxer lavf -audiofile
     #{AppConfig.processing_path}/audio.mp3 -ovc copy -oac copy -of lavf
     -lavfopts format=mp4,i_certify_that_my_video_stream_does_not_use_b_frames -o
-    #{output_path}&quot; </span><span class="marked1"><a name="line40"></a>40
-    Task.create!(:command =&gt; cmd) </span><span class="inferred0"><a
-    name="line41"></a>41 </span><span class="inferred1"><a name="line42"></a>42
-    end </span><span class="inferred0"><a name="line43"></a>43 </span><span
-    class="marked1"><a name="line44"></a>44 private </span><span
-    class="marked0"><a name="line45"></a>45 def self.get_video_metadata(path)
-    </span><span class="marked1"><a name="line46"></a>46 line =
+    #{output_path}&quot; </span><span class="marked0"><a name="line45"></a>45
+    Task.create!(:command =&gt; cmd) </span><span class="inferred1"><a
+    name="line46"></a>46 </span><span class="inferred0"><a name="line47"></a>47
+    end </span><span class="inferred1"><a name="line48"></a>48 </span><span
+    class="marked0"><a name="line49"></a>49 private </span><span
+    class="marked1"><a name="line50"></a>50 def self.get_video_metadata(path)
+    </span><span class="marked0"><a name="line51"></a>51 line =
     `/usr/bin/mplayer -identify -frames 0 #{path} 2&gt;&amp;1 | grep ID_`
-    </span><span class="marked0"><a name="line47"></a>47 duration = 0
-    </span><span class="marked1"><a name="line48"></a>48 width = 0 </span><span
-    class="marked0"><a name="line49"></a>49 height = 0 </span><span
-    class="marked1"><a name="line50"></a>50 if line =~
+    </span><span class="inferred1"><a name="line52"></a>52 </span><span
+    class="marked0"><a name="line53"></a>53 duration = 0 </span><span
+    class="marked1"><a name="line54"></a>54 width = 0 </span><span
+    class="marked0"><a name="line55"></a>55 height = 0 </span><span
+    class="marked1"><a name="line56"></a>56 if line =~
     /.*ID_LENGTH=(\d+)\.(\d{2}).*/ </span><span class="marked0"><a
-    name="line51"></a>51 duration = $1.to_i * 1000 + $2.to_i * 10 </span><span
-    class="inferred1"><a name="line52"></a>52 end </span><span
-    class="marked0"><a name="line53"></a>53 if line =~
-    /.*ID_VIDEO_WIDTH=(\d+).*/ </span><span class="marked1"><a
-    name="line54"></a>54 width = $1 </span><span class="inferred0"><a
-    name="line55"></a>55 end </span><span class="marked1"><a
-    name="line56"></a>56 if line =~ /.*ID_VIDEO_HEIGHT=(\d+).*/ </span><span
-    class="marked0"><a name="line57"></a>57 height = $1 </span><span
+    name="line57"></a>57 duration = $1.to_i * 1000 + $2.to_i * 10 </span><span
     class="inferred1"><a name="line58"></a>58 end </span><span
-    class="inferred0"><a name="line59"></a>59 </span><span class="marked1"><a
-    name="line60"></a>60 {:duration =&gt; Integer(duration), :width =&gt;
+    class="marked0"><a name="line59"></a>59 if line =~
+    /.*ID_VIDEO_WIDTH=(\d+).*/ </span><span class="marked1"><a
+    name="line60"></a>60 width = $1 </span><span class="inferred0"><a
+    name="line61"></a>61 end </span><span class="marked1"><a
+    name="line62"></a>62 if line =~ /.*ID_VIDEO_HEIGHT=(\d+).*/ </span><span
+    class="marked0"><a name="line63"></a>63 height = $1 </span><span
+    class="inferred1"><a name="line64"></a>64 end </span><span
+    class="inferred0"><a name="line65"></a>65 </span><span class="marked1"><a
+    name="line66"></a>66 {:duration =&gt; Integer(duration), :width =&gt;
     Integer(width), :height =&gt; Integer(height)} </span><span
-    class="inferred0"><a name="line61"></a>61 end </span><span
-    class="inferred1"><a name="line62"></a>62 </span><span class="inferred0"><a
-    name="line63"></a>63 end </span></pre>
+    class="inferred0"><a name="line67"></a>67 end </span><span
+    class="inferred1"><a name="line68"></a>68 </span><span class="inferred0"><a
+    name="line69"></a>69 end </span></pre>
     <hr />
     <p> Generated using the <a href='http://eigenclass.org/hiki.rb?rcov'> rcov
     code coverage analysis tool for Ruby </a> version 0.8.1.2. </p>

@@ -235,3 +235,133 @@ Migrating to AdicionandoCommandNaTask (20090921235825)
   [4;36;1mSQL (1.0ms)[0m   [0;1mSHOW FIELDS FROM `tasks`[0m
   [4;35;1mSQL (0.8ms)[0m   [0mdescribe `tasks`[0m
   [4;36;1mSQL (0.3ms)[0m   [0;1mSHOW KEYS FROM `tasks`[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing JobsController#create (for 127.0.0.1 at 2009-09-21 21:30:29) [POST]
+  Parameters: {"input_video"=>"/home/Videos/widescreen.avi"}
+  [4;36;1mJob Columns (1.4ms)[0m   [0;1mSHOW FIELDS FROM `jobs`[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mJob Create (0.4ms)[0m   [0;1mINSERT INTO `jobs` (`duration`, `created_at`, `updated_at`, `input_video`) VALUES(0, '2009-09-22 00:30:30', '2009-09-22 00:30:30', '/home/Videos/widescreen.avi')[0m
+  [4;35;1mSQL (5.3ms)[0m   [0mCOMMIT[0m
+  [4;36;1mTask Columns (1.2ms)[0m   [0;1mSHOW FIELDS FROM `tasks`[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mTask Create (0.3ms)[0m   [0;1mINSERT INTO `tasks` (`created_at`, `command`, `updated_at`, `job_id`) VALUES('2009-09-22 00:30:30', 'mencoder /home/Videos/widescreen.avi -ovc raw -ofps 30000/1001 -oac mp3lame -af lavcresample=22050,channels=1 -lameopts cbr:br=32 -of rawaudio -o /tmp/audio.mp3', '2009-09-22 00:30:30', NULL)[0m
+  [4;35;1mSQL (10.8ms)[0m   [0mCOMMIT[0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mTask Create (0.3ms)[0m   [0mINSERT INTO `tasks` (`created_at`, `command`, `updated_at`, `job_id`) VALUES('2009-09-22 00:30:30', 'mencoder `seq -f %04g.mp4 0 -1` -ovc copy -nosound -of lavf -lavfopts format=mp4,i_certify_that_my_video_stream_does_not_use_b_frames -o /tmp/video.mp4', '2009-09-22 00:30:30', NULL)[0m
+  [4;36;1mSQL (0.4ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mTask Create (0.2ms)[0m   [0;1mINSERT INTO `tasks` (`created_at`, `command`, `updated_at`, `job_id`) VALUES('2009-09-22 00:30:30', 'mencoder /tmp/video.mp4 -audio-demuxer lavf -audiofile /tmp/audio.mp3 -ovc copy -oac copy -of lavf -lavfopts format=mp4,i_certify_that_my_video_stream_does_not_use_b_frames -o /home/Videos/widescreen_lowres.mp4', '2009-09-22 00:30:30', NULL)[0m
+  [4;35;1mSQL (0.4ms)[0m   [0mCOMMIT[0m
+Rendering jobs/create
+Completed in 249ms (View: 9, DB: 21) | 200 OK [http://localhost/jobs?input_video=/home/Videos/widescreen.avi]
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing JobsController#create (for 127.0.0.1 at 2009-09-21 21:32:25) [POST]
+  Parameters: {"input_video"=>"/home/Videos/widescreen.avi"}
+  [4;36;1mJob Columns (1.1ms)[0m   [0;1mSHOW FIELDS FROM `jobs`[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mJob Create (0.4ms)[0m   [0;1mINSERT INTO `jobs` (`duration`, `created_at`, `updated_at`, `input_video`) VALUES(0, '2009-09-22 00:32:25', '2009-09-22 00:32:25', '/home/Videos/widescreen.avi')[0m
+  [4;35;1mSQL (5.9ms)[0m   [0mCOMMIT[0m
+  [4;36;1mTask Columns (1.0ms)[0m   [0;1mSHOW FIELDS FROM `tasks`[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mTask Create (0.3ms)[0m   [0;1mINSERT INTO `tasks` (`created_at`, `command`, `updated_at`, `job_id`) VALUES('2009-09-22 00:32:25', 'mencoder /home/Videos/widescreen.avi -ovc raw -ofps 30000/1001 -oac mp3lame -af lavcresample=22050,channels=1 -lameopts cbr:br=32 -of rawaudio -o /tmp/audio.mp3', '2009-09-22 00:32:25', NULL)[0m
+  [4;35;1mSQL (0.5ms)[0m   [0mCOMMIT[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mTask Create (0.8ms)[0m   [0mINSERT INTO `tasks` (`created_at`, `command`, `updated_at`, `job_id`) VALUES('2009-09-22 00:32:25', 'mencoder `seq -f %04g.mp4 0 -1` -ovc copy -nosound -of lavf -lavfopts format=mp4,i_certify_that_my_video_stream_does_not_use_b_frames -o /tmp/video.mp4', '2009-09-22 00:32:25', NULL)[0m
+  [4;36;1mSQL (0.8ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mTask Create (0.2ms)[0m   [0;1mINSERT INTO `tasks` (`created_at`, `command`, `updated_at`, `job_id`) VALUES('2009-09-22 00:32:25', 'mencoder /tmp/video.mp4 -audio-demuxer lavf -audiofile /tmp/audio.mp3 -ovc copy -oac copy -of lavf -lavfopts format=mp4,i_certify_that_my_video_stream_does_not_use_b_frames -o /home/Videos/widescreen_lowres.mp4', '2009-09-22 00:32:25', NULL)[0m
+  [4;35;1mSQL (0.4ms)[0m   [0mCOMMIT[0m
+Rendering jobs/create
+Completed in 268ms (View: 10, DB: 12) | 200 OK [http://localhost/jobs?input_video=/home/Videos/widescreen.avi]
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing JobsController#create (for 127.0.0.1 at 2009-09-21 21:33:01) [POST]
+  Parameters: {"input_video"=>"/home/Videos/widescreen.avi"}
+  [4;36;1mJob Columns (1.0ms)[0m   [0;1mSHOW FIELDS FROM `jobs`[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mJob Create (0.3ms)[0m   [0;1mINSERT INTO `jobs` (`duration`, `created_at`, `updated_at`, `input_video`) VALUES(0, '2009-09-22 00:33:01', '2009-09-22 00:33:01', '/home/Videos/widescreen.avi')[0m
+  [4;35;1mSQL (3.2ms)[0m   [0mCOMMIT[0m
+  [4;36;1mTask Columns (1.0ms)[0m   [0;1mSHOW FIELDS FROM `tasks`[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mTask Create (0.3ms)[0m   [0;1mINSERT INTO `tasks` (`created_at`, `command`, `updated_at`, `job_id`) VALUES('2009-09-22 00:33:01', 'mencoder /home/Videos/widescreen.avi -ovc raw -ofps 30000/1001 -oac mp3lame -af lavcresample=22050,channels=1 -lameopts cbr:br=32 -of rawaudio -o /tmp/audio.mp3', '2009-09-22 00:33:01', NULL)[0m
+  [4;35;1mSQL (0.5ms)[0m   [0mCOMMIT[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mTask Create (0.3ms)[0m   [0mINSERT INTO `tasks` (`created_at`, `command`, `updated_at`, `job_id`) VALUES('2009-09-22 00:33:01', 'mencoder `seq -f %04g.mp4 0 -1` -ovc copy -nosound -of lavf -lavfopts format=mp4,i_certify_that_my_video_stream_does_not_use_b_frames -o /tmp/video.mp4', '2009-09-22 00:33:01', NULL)[0m
+  [4;36;1mSQL (0.4ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mTask Create (0.2ms)[0m   [0;1mINSERT INTO `tasks` (`created_at`, `command`, `updated_at`, `job_id`) VALUES('2009-09-22 00:33:01', 'mencoder /tmp/video.mp4 -audio-demuxer lavf -audiofile /tmp/audio.mp3 -ovc copy -oac copy -of lavf -lavfopts format=mp4,i_certify_that_my_video_stream_does_not_use_b_frames -o /home/Videos/widescreen_lowres.mp4', '2009-09-22 00:33:01', NULL)[0m
+  [4;35;1mSQL (0.4ms)[0m   [0mCOMMIT[0m
+Rendering jobs/create
+Completed in 268ms (View: 10, DB: 8) | 200 OK [http://localhost/jobs?input_video=/home/Videos/widescreen.avi]
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing JobsController#create (for 127.0.0.1 at 2009-09-21 21:33:22) [POST]
+  Parameters: {"input_video"=>"/home/Videos/widescreen.avi"}
+  [4;36;1mJob Columns (1.1ms)[0m   [0;1mSHOW FIELDS FROM `jobs`[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mJob Create (0.3ms)[0m   [0;1mINSERT INTO `jobs` (`duration`, `created_at`, `updated_at`, `input_video`) VALUES(0, '2009-09-22 00:33:22', '2009-09-22 00:33:22', '/home/Videos/widescreen.avi')[0m
+  [4;35;1mSQL (7.2ms)[0m   [0mCOMMIT[0m
+  [4;36;1mTask Columns (1.0ms)[0m   [0;1mSHOW FIELDS FROM `tasks`[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mTask Create (0.3ms)[0m   [0;1mINSERT INTO `tasks` (`created_at`, `command`, `updated_at`, `job_id`) VALUES('2009-09-22 00:33:22', 'mencoder /home/Videos/widescreen.avi -ovc raw -ofps 30000/1001 -oac mp3lame -af lavcresample=22050,channels=1 -lameopts cbr:br=32 -of rawaudio -o /tmp/audio.mp3', '2009-09-22 00:33:22', NULL)[0m
+  [4;35;1mSQL (0.4ms)[0m   [0mCOMMIT[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mTask Create (0.3ms)[0m   [0mINSERT INTO `tasks` (`created_at`, `command`, `updated_at`, `job_id`) VALUES('2009-09-22 00:33:22', 'mencoder `seq -f %04g.mp4 0 -1` -ovc copy -nosound -of lavf -lavfopts format=mp4,i_certify_that_my_video_stream_does_not_use_b_frames -o /tmp/video.mp4', '2009-09-22 00:33:22', NULL)[0m
+  [4;36;1mSQL (0.7ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mTask Create (0.3ms)[0m   [0;1mINSERT INTO `tasks` (`created_at`, `command`, `updated_at`, `job_id`) VALUES('2009-09-22 00:33:22', 'mencoder /tmp/video.mp4 -audio-demuxer lavf -audiofile /tmp/audio.mp3 -ovc copy -oac copy -of lavf -lavfopts format=mp4,i_certify_that_my_video_stream_does_not_use_b_frames -o /home/Videos/widescreen_lowres.mp4', '2009-09-22 00:33:22', NULL)[0m
+  [4;35;1mSQL (0.4ms)[0m   [0mCOMMIT[0m
+Rendering jobs/create
+Completed in 244ms (View: 9, DB: 13) | 200 OK [http://localhost/jobs?input_video=/home/Videos/widescreen.avi]
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing JobsController#create (for 127.0.0.1 at 2009-09-21 21:34:19) [POST]
+  Parameters: {"input_video"=>"/home/rafael/Videos/widescreen.avi"}
+  [4;36;1mJob Columns (1.1ms)[0m   [0;1mSHOW FIELDS FROM `jobs`[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mJob Create (0.3ms)[0m   [0;1mINSERT INTO `jobs` (`duration`, `created_at`, `updated_at`, `input_video`) VALUES(34300, '2009-09-22 00:34:19', '2009-09-22 00:34:19', '/home/rafael/Videos/widescreen.avi')[0m
+  [4;35;1mSQL (4.9ms)[0m   [0mCOMMIT[0m
+  [4;36;1mTask Columns (0.6ms)[0m   [0;1mSHOW FIELDS FROM `tasks`[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mTask Create (0.2ms)[0m   [0;1mINSERT INTO `tasks` (`created_at`, `command`, `updated_at`, `job_id`) VALUES('2009-09-22 00:34:20', 'mencoder -vf crop=512:384,scale=480:360,harddup /home/rafael/Videos/widescreen.avi -ss 0 -endpos 24.94 -ofps 30000/1001 -sws 2 -of lavf -lavfopts format=mp4,i_certify_that_my_video_stream_does_not_use_b_frames -ovc x264 -x264encopts psnr:bitrate=800:qcomp=0.6:qp_min=10:qp_max=51:qp_step=4:vbv_maxrate=1500:vbv_bufsize=2000:level_idc=30:dct_decimate:me=umh:me_range=16:keyint=250:keyint_min=25:nofast_pskip:global_header:nocabac:direct_pred=auto:nomixed_refs:trellis=1:bframes=0:threads=auto:frameref=1:subq=6 -nosound -o /tmp/0000.mp4', '2009-09-22 00:34:20', NULL)[0m
+  [4;35;1mSQL (2.8ms)[0m   [0mCOMMIT[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mTask Create (0.2ms)[0m   [0mINSERT INTO `tasks` (`created_at`, `command`, `updated_at`, `job_id`) VALUES('2009-09-22 00:34:20', 'mencoder -vf crop=512:384,scale=480:360,harddup /home/rafael/Videos/widescreen.avi -ss 25 -endpos 24.94 -ofps 30000/1001 -sws 2 -of lavf -lavfopts format=mp4,i_certify_that_my_video_stream_does_not_use_b_frames -ovc x264 -x264encopts psnr:bitrate=800:qcomp=0.6:qp_min=10:qp_max=51:qp_step=4:vbv_maxrate=1500:vbv_bufsize=2000:level_idc=30:dct_decimate:me=umh:me_range=16:keyint=250:keyint_min=25:nofast_pskip:global_header:nocabac:direct_pred=auto:nomixed_refs:trellis=1:bframes=0:threads=auto:frameref=1:subq=6 -nosound -o /tmp/0001.mp4', '2009-09-22 00:34:20', NULL)[0m
+  [4;36;1mSQL (0.3ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mSQL (0.2ms)[0m   [0mBEGIN[0m
+  [4;36;1mTask Create (0.1ms)[0m   [0;1mINSERT INTO `tasks` (`created_at`, `command`, `updated_at`, `job_id`) VALUES('2009-09-22 00:34:20', 'mencoder /home/rafael/Videos/widescreen.avi -ovc raw -ofps 30000/1001 -oac mp3lame -af lavcresample=22050,channels=1 -lameopts cbr:br=32 -of rawaudio -o /tmp/audio.mp3', '2009-09-22 00:34:20', NULL)[0m
+  [4;35;1mSQL (0.3ms)[0m   [0mCOMMIT[0m
+  [4;36;1mSQL (0.0ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mTask Create (0.1ms)[0m   [0mINSERT INTO `tasks` (`created_at`, `command`, `updated_at`, `job_id`) VALUES('2009-09-22 00:34:20', 'mencoder `seq -f %04g.mp4 0 1` -ovc copy -nosound -of lavf -lavfopts format=mp4,i_certify_that_my_video_stream_does_not_use_b_frames -o /tmp/video.mp4', '2009-09-22 00:34:20', NULL)[0m
+  [4;36;1mSQL (0.6ms)[0m   [0;1mCOMMIT[0m
+  [4;35;1mSQL (0.0ms)[0m   [0mBEGIN[0m
+  [4;36;1mTask Create (0.2ms)[0m   [0;1mINSERT INTO `tasks` (`created_at`, `command`, `updated_at`, `job_id`) VALUES('2009-09-22 00:34:20', 'mencoder /tmp/video.mp4 -audio-demuxer lavf -audiofile /tmp/audio.mp3 -ovc copy -oac copy -of lavf -lavfopts format=mp4,i_certify_that_my_video_stream_does_not_use_b_frames -o /home/rafael/Videos/widescreen_lowres.mp4', '2009-09-22 00:34:20', NULL)[0m
+  [4;35;1mSQL (0.3ms)[0m   [0mCOMMIT[0m
+Rendering jobs/create
+Completed in 238ms (View: 6, DB: 13) | 200 OK [http://localhost/jobs?input_video=/home/rafael/Videos/widescreen.avi]
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing JobsController#create (for 127.0.0.1 at 2009-09-21 21:35:46) [POST]
+  Parameters: {"input_video"=>"/home/Videos/widescreen.avi"}
+
+RuntimeError (File not found):
+  app/models/job_factory.rb:7:in `create_job'
+  app/controllers/jobs_controller.rb:4:in `create'
+
+Rendered rescues/_trace (134.0ms)
+Rendered rescues/_request_and_response (1.5ms)
+Rendering rescues/layout (internal_server_error)

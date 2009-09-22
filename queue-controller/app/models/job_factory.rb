@@ -2,6 +2,11 @@ require 'app_config'
 
 class JobFactory
   def self.create_job(params)
+
+    if(!File.exists?(params[:input_video]))
+      raise "File not found"
+    end
+
     metadata = get_video_metadata(params[:input_video])
 
     last_chunk = 0
@@ -44,6 +49,7 @@ class JobFactory
   private
   def self.get_video_metadata(path)
     line = `/usr/bin/mplayer -identify -frames 0 #{path} 2>&1 | grep ID_`
+
     duration = 0
     width = 0
     height = 0
