@@ -215,3 +215,23 @@ Processing JobsController#create (for 127.0.0.1 at 2009-09-16 20:13:03) [POST]
   [4;35;1mSQL (2.7ms)[0m   [0mCOMMIT[0m
 Rendering jobs/create
 Completed in 132ms (View: 10, DB: 4) | 200 OK [http://localhost/jobs?input_video=/home/rafael/Videos/the_dark_knight-tlr3_h720p.mov]
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mSQL (0.3ms)[0m   [0;1mSHOW TABLES[0m
+  [4;35;1mSQL (8.7ms)[0m   [0mSELECT version FROM schema_migrations[0m
+Migrating to CreateJobs (20090916215222)
+Migrating to CreateTasks (20090916215338)
+Migrating to AdicionandoTasksNoJob (20090916215450)
+Migrating to AdicionandoVideoEDuracaoAoJob (20090916230358)
+Migrating to AdicionandoCommandNaTask (20090921235825)
+  [4;36;1mSQL (36.1ms)[0m   [0;1mALTER TABLE `tasks` ADD `command` text[0m
+  [4;35;1mSQL (0.4ms)[0m   [0mINSERT INTO schema_migrations (version) VALUES ('20090921235825')[0m
+  [4;36;1mSQL (0.4ms)[0m   [0;1mSHOW TABLES[0m
+  [4;35;1mSQL (0.2ms)[0m   [0mSELECT version FROM schema_migrations[0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1mSHOW TABLES[0m
+  [4;35;1mSQL (1.0ms)[0m   [0mSHOW FIELDS FROM `jobs`[0m
+  [4;36;1mSQL (0.8ms)[0m   [0;1mdescribe `jobs`[0m
+  [4;35;1mSQL (0.3ms)[0m   [0mSHOW KEYS FROM `jobs`[0m
+  [4;36;1mSQL (1.0ms)[0m   [0;1mSHOW FIELDS FROM `tasks`[0m
+  [4;35;1mSQL (0.8ms)[0m   [0mdescribe `tasks`[0m
+  [4;36;1mSQL (0.3ms)[0m   [0;1mSHOW KEYS FROM `tasks`[0m
