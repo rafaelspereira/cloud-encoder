@@ -9,13 +9,17 @@ class JobFactory
     duration = metadata[:duration]
     reaspect_width = metadata[:height]/3*4
 
+    if params[:input_video] =~ /(.*)\.\w{3}/
+      output_path = $1 + "_lowres.mp4"
+    end
+
     Job.create!(:input_video => params[:input_video], :duration => duration)
 
     duration = duration / 1000
 
     #VIDEO CHUNK PROCESSING
     while last_chunk < duration do
-      cmd = "mencoder -vf crop=#{reaspect_width}:#{metadata[:height]},scale=#{AppConfig.mencoder.video.output_width}:#{AppConfig.mencoder.video.output_height},harddup #{params[:input_video]} -ss #{last_chunk} -endpos #{AppConfig.chunk_size} #{AppConfig.mencoder.video.opts} -nosound -o #{"%04d" % index}.mp4"
+      cmd = "mencoder -vf crop=#{reaspect_width}:#{metadata[:height]},scale=#{AppConfig.mencoder.video.output_width}:#{AppConfig.mencoder.video.output_height},harddup #{params[:input_video]} -ss #{last_chunk} -endpos #{AppConfig.chunk_size} #{AppConfig.mencoder.video.opts} -nosound -o #{AppConfig.processing_path}/#{"%04d" % index}.mp4"
 
       Task.create!(:command => cmd)
 
@@ -24,11 +28,15 @@ class JobFactory
     end
 
     #AUDIO PROCESSING
-    cmd = "mencoder #{params[:input_video]} #{AppConfig.mencoder.audio.opts} -o audio.mp3"
+    cmd = "mencoder #{params[:input_video]} #{AppConfig.mencoder.audio.opts} -o #{AppConfig.processing_path}/audio.mp3"
     Task.create!(:command => cmd)
 
     #CHUNK MERGE
-    cmd = "mencoder `seq -f %04g.mp4 0 #{index - 1}` -ovc copy -nosound -of lavf -lavfopts format=mp4,i_certify_that_my_video_stream_does_not_use_b_frames -o video.mp4"
+    cmd = "mencoder `seq -f %04g.mp4 0 #{index - 1}` -ovc copy -nosound -of lavf -lavfopts format=mp4,i_certify_that_my_video_stream_does_not_use_b_frames -o #{AppConfig.processing_path}/video.mp4"
+    Task.create!(:command => cmd)
+
+    #A/V MIXING
+    cmd = "mencoder #{AppConfig.processing_path}/video.mp4 -audio-demuxer lavf -audiofile #{AppConfig.processing_path}/audio.mp3 -ovc copy -oac copy -of lavf -lavfopts format=mp4,i_certify_that_my_video_stream_does_not_use_b_frames -o #{output_path}"
     Task.create!(:command => cmd)
 
   end

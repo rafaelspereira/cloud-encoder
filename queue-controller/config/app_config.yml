@@ -1,6 +1,7 @@
 ## YAML Template.
 chunk_size: 24.940
 split_time: 25
+processing_path: /tmp
 mencoder:
   video:
     opts: "-ofps 30000/1001 -sws 2 -of lavf -lavfopts format=mp4,i_certify_that_my_video_stream_does_not_use_b_frames -ovc x264 -x264encopts psnr:bitrate=800:qcomp=0.6:qp_min=10:qp_max=51:qp_step=4:vbv_maxrate=1500:vbv_bufsize=2000:level_idc=30:dct_decimate:me=umh:me_range=16:keyint=250:keyint_min=25:nofast_pskip:global_header:nocabac:direct_pred=auto:nomixed_refs:trellis=1:bframes=0:threads=auto:frameref=1:subq=6"
