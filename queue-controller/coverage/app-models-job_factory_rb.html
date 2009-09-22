@@ -156,7 +156,7 @@
       C0 code coverage information
     </h3>
     <p>
-      Generated on Mon Sep 21 21:39:20 -0300 2009 with 
+      Generated on Mon Sep 21 21:57:20 -0300 2009 with 
       <a href='http://eigenclass.org/hiki/rcov'>
         rcov 0.8.1.2
       </a>
@@ -174,7 +174,7 @@
     <td class='heading'> Total coverage </td> <td class='heading'> Code coverage
     </td> </tr> </thead> <tbody> <tr class='light'> <td> <a
     href='app-models-job_factory_rb.html'> app/models/job_factory.rb </a> </td>
-    <td class='lines_total'> <tt> 69 </tt> </td> <td class='lines_code'> <tt> 47
+    <td class='lines_total'> <tt> 77 </tt> </td> <td class='lines_code'> <tt> 53
     </tt> </td> <td> <table cellspacing='0' align='right' cellpadding='0'> <tr>
     <td> <tt class='coverage_total'> 100.0% </tt> &nbsp; </td> <td> <table
     class='percent_graph' cellspacing='0' width='100' cellpadding='0'> <tr> <td
@@ -211,68 +211,78 @@
     </span><span class="marked0"><a name="line23"></a>23 duration = duration /
     1000 </span><span class="inferred1"><a name="line24"></a>24 </span><span
     class="inferred0"><a name="line25"></a>25 #VIDEO CHUNK PROCESSING
-    </span><span class="marked1"><a name="line26"></a>26 while last_chunk &lt;
-    duration do </span><span class="marked0"><a name="line27"></a>27 cmd =
+    </span><span class="marked1"><a name="line26"></a>26 video_encoding_tasks =
+    [] </span><span class="marked0"><a name="line27"></a>27 while last_chunk
+    &lt; duration do </span><span class="marked1"><a name="line28"></a>28 cmd =
     &quot;mencoder -vf
     crop=#{reaspect_width}:#{metadata[:height]},scale=#{AppConfig.mencoder.video
     output_width}:#{AppConfig.mencoder.video.output_height},harddup
     #{params[:input_video]} -ss #{last_chunk} -endpos #{AppConfig.chunk_size}
     #{AppConfig.mencoder.video.opts} -nosound -o
     #{AppConfig.processing_path}/#{&quot;%04d&quot; % index}.mp4&quot;
-    </span><span class="inferred1"><a name="line28"></a>28 </span><span
-    class="marked0"><a name="line29"></a>29 Task.create!(:command =&gt; cmd)
-    </span><span class="inferred1"><a name="line30"></a>30 </span><span
-    class="marked0"><a name="line31"></a>31 index = index + 1 </span><span
-    class="marked1"><a name="line32"></a>32 last_chunk = last_chunk +
-    AppConfig.split_time </span><span class="inferred0"><a name="line33"></a>33
-    end </span><span class="inferred1"><a name="line34"></a>34 </span><span
-    class="inferred0"><a name="line35"></a>35 #AUDIO PROCESSING </span><span
-    class="marked1"><a name="line36"></a>36 cmd = &quot;mencoder
-    #{params[:input_video]} #{AppConfig.mencoder.audio.opts} -o
-    #{AppConfig.processing_path}/audio.mp3&quot; </span><span class="marked0"><a
-    name="line37"></a>37 Task.create!(:command =&gt; cmd) </span><span
-    class="inferred1"><a name="line38"></a>38 </span><span class="inferred0"><a
-    name="line39"></a>39 #CHUNK MERGE </span><span class="marked1"><a
-    name="line40"></a>40 cmd = &quot;mencoder `seq -f %04g.mp4 0 #{index - 1}`
-    -ovc copy -nosound -of lavf -lavfopts
+    </span><span class="inferred0"><a name="line29"></a>29 </span><span
+    class="marked1"><a name="line30"></a>30 video_encoding_tasks &lt;&lt;
+    Task.create!(:command =&gt; cmd) </span><span class="inferred0"><a
+    name="line31"></a>31 </span><span class="marked1"><a name="line32"></a>32
+    index = index + 1 </span><span class="marked0"><a name="line33"></a>33
+    last_chunk = last_chunk + AppConfig.split_time </span><span
+    class="inferred1"><a name="line34"></a>34 end </span><span
+    class="inferred0"><a name="line35"></a>35 </span><span class="inferred1"><a
+    name="line36"></a>36 #AUDIO PROCESSING </span><span class="marked0"><a
+    name="line37"></a>37 cmd = &quot;mencoder #{params[:input_video]}
+    #{AppConfig.mencoder.audio.opts} -o
+    #{AppConfig.processing_path}/audio.mp3&quot; </span><span class="marked1"><a
+    name="line38"></a>38 audio_encoding_task = Task.create!(:command =&gt; cmd)
+    </span><span class="inferred0"><a name="line39"></a>39 </span><span
+    class="inferred1"><a name="line40"></a>40 #CHUNK MERGE </span><span
+    class="marked0"><a name="line41"></a>41 cmd = &quot;mencoder `seq -f
+    %04g.mp4 0 #{index - 1}` -ovc copy -nosound -of lavf -lavfopts
     format=mp4,i_certify_that_my_video_stream_does_not_use_b_frames -o
-    #{AppConfig.processing_path}/video.mp4&quot; </span><span class="marked0"><a
-    name="line41"></a>41 Task.create!(:command =&gt; cmd) </span><span
-    class="inferred1"><a name="line42"></a>42 </span><span class="inferred0"><a
-    name="line43"></a>43 #A/V MIXING </span><span class="marked1"><a
-    name="line44"></a>44 cmd = &quot;mencoder
+    #{AppConfig.processing_path}/video.mp4&quot; </span><span class="marked1"><a
+    name="line42"></a>42 merge_task = Task.create!(:command =&gt; cmd)
+    </span><span class="inferred0"><a name="line43"></a>43 </span><span
+    class="inferred1"><a name="line44"></a>44 #A/V MIXING </span><span
+    class="marked0"><a name="line45"></a>45 cmd = &quot;mencoder
     #{AppConfig.processing_path}/video.mp4 -audio-demuxer lavf -audiofile
     #{AppConfig.processing_path}/audio.mp3 -ovc copy -oac copy -of lavf
     -lavfopts format=mp4,i_certify_that_my_video_stream_does_not_use_b_frames -o
-    #{output_path}&quot; </span><span class="marked0"><a name="line45"></a>45
-    Task.create!(:command =&gt; cmd) </span><span class="inferred1"><a
-    name="line46"></a>46 </span><span class="inferred0"><a name="line47"></a>47
-    end </span><span class="inferred1"><a name="line48"></a>48 </span><span
-    class="marked0"><a name="line49"></a>49 private </span><span
-    class="marked1"><a name="line50"></a>50 def self.get_video_metadata(path)
-    </span><span class="marked0"><a name="line51"></a>51 line =
+    #{output_path}&quot; </span><span class="marked1"><a name="line46"></a>46
+    mixing_task = Task.create!(:command =&gt; cmd) </span><span
+    class="inferred0"><a name="line47"></a>47 </span><span class="marked1"><a
+    name="line48"></a>48 merge_task.dependencies = video_encoding_tasks
+    </span><span class="marked0"><a name="line49"></a>49 merge_task.dependencies
+    &lt;&lt; audio_encoding_task </span><span class="marked1"><a
+    name="line50"></a>50 merge_task.save! </span><span class="inferred0"><a
+    name="line51"></a>51 </span><span class="marked1"><a name="line52"></a>52
+    mixing_task.dependencies &lt;&lt; merge_task </span><span class="marked0"><a
+    name="line53"></a>53 mixing_task.save! </span><span class="inferred1"><a
+    name="line54"></a>54 </span><span class="inferred0"><a name="line55"></a>55
+    end </span><span class="inferred1"><a name="line56"></a>56 </span><span
+    class="marked0"><a name="line57"></a>57 private </span><span
+    class="marked1"><a name="line58"></a>58 def self.get_video_metadata(path)
+    </span><span class="marked0"><a name="line59"></a>59 line =
     `/usr/bin/mplayer -identify -frames 0 #{path} 2&gt;&amp;1 | grep ID_`
-    </span><span class="inferred1"><a name="line52"></a>52 </span><span
-    class="marked0"><a name="line53"></a>53 duration = 0 </span><span
-    class="marked1"><a name="line54"></a>54 width = 0 </span><span
-    class="marked0"><a name="line55"></a>55 height = 0 </span><span
-    class="marked1"><a name="line56"></a>56 if line =~
+    </span><span class="inferred1"><a name="line60"></a>60 </span><span
+    class="marked0"><a name="line61"></a>61 duration = 0 </span><span
+    class="marked1"><a name="line62"></a>62 width = 0 </span><span
+    class="marked0"><a name="line63"></a>63 height = 0 </span><span
+    class="marked1"><a name="line64"></a>64 if line =~
     /.*ID_LENGTH=(\d+)\.(\d{2}).*/ </span><span class="marked0"><a
-    name="line57"></a>57 duration = $1.to_i * 1000 + $2.to_i * 10 </span><span
-    class="inferred1"><a name="line58"></a>58 end </span><span
-    class="marked0"><a name="line59"></a>59 if line =~
+    name="line65"></a>65 duration = $1.to_i * 1000 + $2.to_i * 10 </span><span
+    class="inferred1"><a name="line66"></a>66 end </span><span
+    class="marked0"><a name="line67"></a>67 if line =~
     /.*ID_VIDEO_WIDTH=(\d+).*/ </span><span class="marked1"><a
-    name="line60"></a>60 width = $1 </span><span class="inferred0"><a
-    name="line61"></a>61 end </span><span class="marked1"><a
-    name="line62"></a>62 if line =~ /.*ID_VIDEO_HEIGHT=(\d+).*/ </span><span
-    class="marked0"><a name="line63"></a>63 height = $1 </span><span
-    class="inferred1"><a name="line64"></a>64 end </span><span
-    class="inferred0"><a name="line65"></a>65 </span><span class="marked1"><a
-    name="line66"></a>66 {:duration =&gt; Integer(duration), :width =&gt;
+    name="line68"></a>68 width = $1 </span><span class="inferred0"><a
+    name="line69"></a>69 end </span><span class="marked1"><a
+    name="line70"></a>70 if line =~ /.*ID_VIDEO_HEIGHT=(\d+).*/ </span><span
+    class="marked0"><a name="line71"></a>71 height = $1 </span><span
+    class="inferred1"><a name="line72"></a>72 end </span><span
+    class="inferred0"><a name="line73"></a>73 </span><span class="marked1"><a
+    name="line74"></a>74 {:duration =&gt; Integer(duration), :width =&gt;
     Integer(width), :height =&gt; Integer(height)} </span><span
-    class="inferred0"><a name="line67"></a>67 end </span><span
-    class="inferred1"><a name="line68"></a>68 </span><span class="inferred0"><a
-    name="line69"></a>69 end </span></pre>
+    class="inferred0"><a name="line75"></a>75 end </span><span
+    class="inferred1"><a name="line76"></a>76 </span><span class="inferred0"><a
+    name="line77"></a>77 end </span></pre>
     <hr />
     <p> Generated using the <a href='http://eigenclass.org/hiki.rb?rcov'> rcov
     code coverage analysis tool for Ruby </a> version 0.8.1.2. </p>

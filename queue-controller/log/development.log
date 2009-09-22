@@ -365,3 +365,27 @@ RuntimeError (File not found):
 Rendered rescues/_trace (134.0ms)
 Rendered rescues/_request_and_response (1.5ms)
 Rendering rescues/layout (internal_server_error)
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1mSHOW TABLES[0m
+  [4;35;1mSQL (0.2ms)[0m   [0mSELECT version FROM schema_migrations[0m
+Migrating to CreateJobs (20090916215222)
+Migrating to CreateTasks (20090916215338)
+Migrating to AdicionandoTasksNoJob (20090916215450)
+Migrating to AdicionandoVideoEDuracaoAoJob (20090916230358)
+Migrating to AdicionandoCommandNaTask (20090921235825)
+Migrating to AdicionandoDependenciasEntreTasks (20090922004822)
+  [4;36;1mSQL (4.5ms)[0m   [0;1mCREATE TABLE `tasks_dependencies` (`task_id` int(11), `dependency_id` int(11)) ENGINE=InnoDB[0m
+  [4;35;1mSQL (0.5ms)[0m   [0mINSERT INTO schema_migrations (version) VALUES ('20090922004822')[0m
+  [4;36;1mSQL (0.4ms)[0m   [0;1mSHOW TABLES[0m
+  [4;35;1mSQL (0.2ms)[0m   [0mSELECT version FROM schema_migrations[0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1mSHOW TABLES[0m
+  [4;35;1mSQL (0.6ms)[0m   [0mSHOW FIELDS FROM `jobs`[0m
+  [4;36;1mSQL (0.6ms)[0m   [0;1mdescribe `jobs`[0m
+  [4;35;1mSQL (0.3ms)[0m   [0mSHOW KEYS FROM `jobs`[0m
+  [4;36;1mSQL (0.6ms)[0m   [0;1mSHOW FIELDS FROM `tasks`[0m
+  [4;35;1mSQL (0.5ms)[0m   [0mdescribe `tasks`[0m
+  [4;36;1mSQL (0.3ms)[0m   [0;1mSHOW KEYS FROM `tasks`[0m
+  [4;35;1mSQL (0.6ms)[0m   [0mSHOW FIELDS FROM `tasks_dependencies`[0m
+  [4;36;1mSQL (0.5ms)[0m   [0;1mdescribe `tasks_dependencies`[0m
+  [4;35;1mSQL (0.2ms)[0m   [0mSHOW KEYS FROM `tasks_dependencies`[0m

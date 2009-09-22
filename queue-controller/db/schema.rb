@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090921235825) do
+ActiveRecord::Schema.define(:version => 20090922004822) do
 
   create_table "jobs", :force => true do |t|
     t.datetime "created_at"
@@ -23,6 +23,11 @@ ActiveRecord::Schema.define(:version => 20090921235825) do
     t.datetime "updated_at"
     t.integer  "job_id"
     t.text     "command"
+  end
+
+  create_table "tasks_dependencies", :id => false, :force => true do |t|
+    t.integer "task_id"
+    t.integer "dependency_id"
   end
 
 end
